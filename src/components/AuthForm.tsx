@@ -1,8 +1,14 @@
 'use client';
 
+import axios from 'axios';
 import { useCallback, useState } from 'react';
+import { signIn } from 'next-auth/react';
+
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 import Input from './Input';
+import OAuthBtn from './OAuthBtn';
 
 const AuthForm = () => {
     const [name, setName] = useState('');
@@ -15,6 +21,23 @@ const AuthForm = () => {
             return currentVariant === 'login' ? 'register' : 'login';
         });
     }, []);
+
+    const register = useCallback(async () => {
+        try {
+            await axios.post('/api/register', { name, email, password });
+            login();
+        } catch (error) {
+            console.log('Register Error: ', error);
+        }
+    }, [name, email, password]);
+
+    const login = useCallback(async () => {
+        try {
+            await signIn('credentials', { email, password, callbackUrl: '/' });
+        } catch (error) {
+            console.log('Login Error: ', error);
+        }
+    }, [email, password]);
 
     return (
         <>
@@ -47,11 +70,25 @@ const AuthForm = () => {
                 />
             </div>
             <button
-                // onClick={variant === 'login' ? login : register}
+                onClick={variant === 'login' ? login : register}
                 className="w-full mt-10 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
             >
                 {variant === 'login' ? 'Login' : 'Register'}
             </button>
+            <div className="flex flex-row items-center justify-center gap-4 mt-8">
+                <OAuthBtn
+                    Icon={FcGoogle}
+                    onClick={() => {
+                        signIn('google', { callbackUrl: '/' });
+                    }}
+                />
+                <OAuthBtn
+                    Icon={FaGithub}
+                    onClick={() => {
+                        signIn('github', { callbackUrl: '/' });
+                    }}
+                />
+            </div>
             <p className="text-neutral-500 mt-12 text-sm">
                 {variant === 'login'
                     ? 'First time using Netflix?'
