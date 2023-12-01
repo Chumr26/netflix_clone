@@ -21,7 +21,7 @@ const ProfileItem = ({
             }}
         >
             <div className="group w-44 mx-auto">
-                <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:border-white group-hover:cursor-pointer">
+                <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:border-white group-hover:cursor-pointer overflow-hidden">
                     <Image src={img} alt="Profile" />
                 </div>
                 <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">
