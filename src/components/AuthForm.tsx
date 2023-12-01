@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, ChangeEvent } from 'react';
 import { signIn } from 'next-auth/react';
 
 import { FcGoogle } from 'react-icons/fc';
@@ -11,10 +11,14 @@ import Input from './Input';
 import OAuthBtn from './OAuthBtn';
 
 const AuthForm = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [variant, setVariant] = useState('login');
+
+    let [loading, setLoading] = useState(false);
+    let [formValues, setFormValues] = useState({
+        name: '',
+        email: '',
+        password: '',
+    });
 
     const toggleVariant = useCallback(() => {
         setVariant((currentVariant) => {
@@ -22,22 +26,33 @@ const AuthForm = () => {
         });
     }, []);
 
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { id, value } = event.target;
+        setFormValues({ ...formValues, [id]: value });
+    };
+
     const register = useCallback(async () => {
+        setLoading(true);
         try {
-            await axios.post('/api/register', { name, email, password });
+            await axios.post('/api/register', formValues);
             login();
         } catch (error) {
             console.log('Register Error: ', error);
         }
-    }, [name, email, password]);
+    }, [formValues.name, formValues.email, formValues.password]);
 
     const login = useCallback(async () => {
+        setLoading(true);
         try {
-            await signIn('credentials', { email, password, callbackUrl: '/' });
+            await signIn('credentials', {
+                email: formValues.email,
+                password: formValues.password,
+                callbackUrl: '/profile',
+            });
         } catch (error) {
             console.log('Login Error: ', error);
         }
-    }, [email, password]);
+    }, [formValues.email, formValues.password]);
 
     return (
         <>
@@ -47,23 +62,23 @@ const AuthForm = () => {
             <div className="flex flex-col gap-4">
                 {variant === 'register' && (
                     <Input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={formValues.name}
+                        onChange={handleChange}
                         id="name"
                         label="Name"
                         type="text"
                     />
                 )}
                 <Input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formValues.email}
+                    onChange={handleChange}
                     id="email"
                     label="Email"
                     type="email"
                 />
                 <Input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formValues.password}
+                    onChange={handleChange}
                     id="password"
                     label="Password"
                     type="password"
@@ -73,19 +88,25 @@ const AuthForm = () => {
                 onClick={variant === 'login' ? login : register}
                 className="w-full mt-10 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
             >
-                {variant === 'login' ? 'Login' : 'Register'}
+                {loading
+                    ? 'Loading'
+                    : variant === 'login'
+                    ? 'Login'
+                    : 'Register'}
             </button>
             <div className="flex flex-row items-center justify-center gap-4 mt-8">
                 <OAuthBtn
                     Icon={FcGoogle}
                     onClick={() => {
-                        signIn('google', { callbackUrl: '/' });
+                        setLoading(true);
+                        signIn('google', { callbackUrl: '/profile' });
                     }}
                 />
                 <OAuthBtn
                     Icon={FaGithub}
                     onClick={() => {
-                        signIn('github', { callbackUrl: '/' });
+                        setLoading(true);
+                        signIn('github', { callbackUrl: '/profile' });
                     }}
                 />
             </div>

@@ -5,7 +5,11 @@ import prismadb from '@/lib/prismadb';
 
 export async function POST(req: NextRequest) {
     try {
-        const { name, email, password } = await req.json();
+        const { name, email, password } = (await req.json()) as {
+            name: string;
+            email: string;
+            password: string;
+        };
         const existingUser = await prismadb.user.findUnique({
             where: { email },
         });
@@ -20,8 +24,14 @@ export async function POST(req: NextRequest) {
         });
 
         return NextResponse.json(user, { status: 200 });
-    } catch (error) {
+    } catch (error: any) {
         console.log('api/register Error: ', error);
-        return new NextResponse(null, { status: 400 });
+        return new NextResponse(
+            JSON.stringify({
+                message: 'api/register Error: ',
+                error: error.message,
+            }),
+            { status: 400 }
+        );
     }
 }
