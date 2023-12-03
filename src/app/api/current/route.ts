@@ -7,10 +7,10 @@ export async function GET() {
         const currentUser = await serverAuth();
         return NextResponse.json(currentUser, { status: 200 });
     } catch (error: any) {
-        console.log('api/current endpoint Error', error);
+        console.log('api/current Endpoint Error', error);
         return new NextResponse(
             JSON.stringify({
-                message: 'api/current endpoint Error: ',
+                message: 'api/current Endpoint Error: ',
                 error: error.message,
             }),
             { status: 400 }
