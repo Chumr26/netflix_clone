@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import profileImage from '/public/images/default-slate.png';
 
 import { authOptions } from '@/lib/auth';
 import ProfileItem from '@/components/ProfileItem';
@@ -17,7 +16,7 @@ const Profile = async () => {
                 </h1>
                 <div className="flex items-center justify-center gap-8 mt-10">
                     <ProfileItem
-                        img={profileImage}
+                        img='/images/default-slate.png'
                         userName={session.user?.name!}
                     />
                 </div>

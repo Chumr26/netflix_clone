@@ -1,11 +1,10 @@
 'use client';
 
+import useFetcher from '@/hooks/useFetcher';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
-import useBillboard from '@/hooks/useBillboard';
-
 const Billboard = () => {
-    const { data } = useBillboard();
+    const { data } = useFetcher('/api/random');
     return (
         <div className="relative h-[56.25vw]">
             <video
