@@ -16,8 +16,9 @@ export default async function Home() {
         <>
             <NavBar />
             <Billboard />
-            <div className='pb-40'>
-                <MovieList title="Trending now"/>
+            <div className="pb-40">
+                <MovieList title="Trending Now" api="/api/movies" />
+                <MovieList title="My List" api="/api/favorites" />
             </div>
         </>
     );

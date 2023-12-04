@@ -4,8 +4,8 @@ import useFetcher from '@/hooks/useFetcher';
 
 import MovieCard from './MovieCard';
 
-const MovieList = ({ title }: { title: string }) => {
-    const { data }: { data: Record<string, any>[] } = useFetcher('/api/movies');
+const MovieList = ({ title, api }: { title: string; api: string }) => {
+    const { data }: { data: Record<string, any>[] } = useFetcher(api);
     return (
         <div className="px-4 md:px-12 mt-4 space-y-8">
             <p className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-4">
