@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { BsFillPlayFill } from 'react-icons/bs';
 
 import FavoriteButton from './FavoriteButton';
 
 const MovieCard = ({ data }: { data: Record<string, any> }) => {
+    const router = useRouter();
     return (
         <div className="group bg-zinc-900 col-span-1 relative h-[12vw]">
             <Image
@@ -27,12 +29,12 @@ const MovieCard = ({ data }: { data: Record<string, any> }) => {
                     <div className="flex flex-col">
                         <div className="flex items-center gap-3">
                             <div
-                                onClick={() => {}}
+                                onClick={() => router.push(`/watch/${data.id}`)}
                                 className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex items-center justify-center transition hover:bg-neutral-300"
                             >
                                 <BsFillPlayFill size={30} />
                             </div>
-                            <FavoriteButton movieId={data.id}/>
+                            <FavoriteButton movieId={data.id} />
                         </div>
                         <p className="text-green-400 font-semibold mt-4">
                             New <span className="text-white">2023</span>
