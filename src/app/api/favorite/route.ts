@@ -44,7 +44,7 @@ export async function DELETE(req: NextRequest) {
         });
         if (!existingMovie) throw new Error('Invalid ID');
         const updateUser = await prismadb.user.update({
-            where: { email: user.email },
+            where: { email: user?.email },
             data: {
                 favoriteIds: user.favoriteIds.filter(
                     (favoriteId) => favoriteId !== movieId

@@ -22,7 +22,7 @@ const InfoModal = () => {
         setTimeout(() => {
             closeModal();
         }, 300);
-    }, []);
+    }, [closeModal]);
 
     if (!isOpen) return null;
     return (
