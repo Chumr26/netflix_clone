@@ -1,7 +1,5 @@
 'use client';
 
-import ReactDOM from 'react-dom';
-
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 

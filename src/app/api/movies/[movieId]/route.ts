@@ -14,6 +14,7 @@ export async function GET(
             throw new Error('/api/movies/[movieId] Endpoint Unauthenticated');
 
         if (typeof params.movieId !== 'string') throw new Error('Invalid ID');
+
         if (!params.movieId) throw new Error('Missing ID');
 
         const movie = await prismadb.movie.findUnique({
