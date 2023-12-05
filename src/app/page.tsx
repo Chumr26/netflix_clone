@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth';
 import NavBar from '@/components/NavBar';
 import Billboard from '@/components/Billboard';
 import MovieList from '@/components/MovieList';
+import InfoModal from '@/components/InfoModal';
 // import SignOutButton from '@/components/SignOutButton';
 
 export default async function Home() {
@@ -14,6 +15,7 @@ export default async function Home() {
 
     return (
         <>
+            <InfoModal />
             <NavBar />
             <Billboard />
             <div className="pb-40">

@@ -3,11 +3,14 @@
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import useFetcher from '@/hooks/useFetcher';
+import useInfoModal from '@/hooks/useInfoModal';
 
 import PlayButton from './PlayButton';
 
 const Billboard = () => {
     const { data } = useFetcher('/api/random');
+    const { openModal } = useInfoModal();
+
     return (
         <div className="relative h-[56.25vw]">
             <video
@@ -27,7 +30,10 @@ const Billboard = () => {
                 </p>
                 <div className="flex items-center mt-3 md:mt-4 gap-3">
                     <PlayButton movieId={data?.id} />
-                    <button className="flex gap-1 items-center bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xl lg:text-lg font-semibold hover:bg-opacity-20 transition">
+                    <button
+                        onClick={() => openModal(data?.id)}
+                        className="flex gap-1 items-center bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xl lg:text-lg font-semibold hover:bg-opacity-20 transition"
+                    >
                         <AiOutlineInfoCircle />
                         More Info
                     </button>

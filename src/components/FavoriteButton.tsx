@@ -31,7 +31,7 @@ const FavoriteButton = ({ movieId }: { movieId: string }) => {
     return (
         <div
             onClick={toggleFavorite}
-            className="cursor-pointer group w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex items-center justify-center transition hover:border-neutral-300"
+            className="cursor-pointer group w-10 h-10 border-white border-2 rounded-full flex items-center justify-center transition hover:border-neutral-300"
         >
             <Icon className="text-white" size={25} />
         </div>
