@@ -31,16 +31,6 @@ const AuthForm = () => {
         setFormValues({ ...formValues, [id]: value });
     };
 
-    const register = useCallback(async () => {
-        setLoading(true);
-        try {
-            await axios.post('/api/register', formValues);
-            login();
-        } catch (error) {
-            console.log('Register Error: ', error);
-        }
-    }, [formValues.name, formValues.email, formValues.password]);
-
     const login = useCallback(async () => {
         setLoading(true);
         try {
@@ -53,6 +43,16 @@ const AuthForm = () => {
             console.log('Login Error: ', error);
         }
     }, [formValues.email, formValues.password]);
+
+    const register = useCallback(async () => {
+        setLoading(true);
+        try {
+            await axios.post('/api/register', formValues);
+            login();
+        } catch (error) {
+            console.log('Register Error: ', error);
+        }
+    }, [formValues, login]);
 
     return (
         <>

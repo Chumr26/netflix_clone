@@ -25,7 +25,7 @@ const FavoriteButton = ({ movieId }: { movieId: string }) => {
 
         mutate({ ...currentUser, favoriteIds: response.data.favoriteIds });
         mutateFavorites();
-    }, [currentUser, mutate, mutateFavorites]);
+    }, [isFavorite, movieId, mutate, currentUser, mutateFavorites]);
 
     const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
     return (
